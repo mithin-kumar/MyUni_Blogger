@@ -52,8 +52,8 @@
 </nav>
 </header>
 <main role="main" class="container">
-  <div class="row g-3">
-    <div class="col-sm-7">
+  <div class="row g-3 md-5">
+    <div class="col-md-7">
       {%  with messages = get_flashed_messages(with_categories =true) %}
       {% if  messages %}
        {% for  category, message in messages %}
@@ -68,13 +68,13 @@
     </div>
     <div class="col-md-4">
       <div class="content-section">
-        <h3>Our Sidebar</h3>
+        <h3>Explore Here !</h3>
         <p class='text-muted'>You can put any information here you'd like.
           <ul class="list-group">
             <li class="list-group-item list-group-item-light">Latest Posts</li>
             <li class="list-group-item list-group-item-light">Announcements</li>
             <li class="list-group-item list-group-item-light">Calendars</li>
-            <li class="list-group-item list-group-item-light">etc</li>
+            <li class="list-group-item list-group-item-light">References</li>
           </ul>
         </p>
       </div>

@@ -5,13 +5,15 @@
 
 {% for post in posts %}
  <article class="media content-section">
- <div class="card border-Dark mb-4" style="min-width: 10rem;">
+ <div class="card">
+  <div class="card-header">
+    {{ post.date_posted }}
+  </div>
   <div class="card-body">
-    <h5 class="card-title">{{ post.title }}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">{{ post.author }}</h6>
-      <p class="card-text">{{ post.content }}</p>
-      <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
+    <blockquote class="blockquote mb-0">
+      <p>{{ post.content }}</p>
+      <footer class="blockquote-footer"> Posted By <cite title="Source Title">{{ post.author }}</cite></footer>
+    </blockquote>
   </div>
 </div>
 </article>
