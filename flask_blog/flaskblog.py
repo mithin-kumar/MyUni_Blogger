@@ -1,10 +1,34 @@
 from distutils.log import debug
+from datetime import datetime
+from flask_sqlalchemy import  SQLAlchemy
 from flask import Flask,render_template,url_for,flash,redirect
 from form import RegistrationForm, LoginForm
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY']='bb06318b3b0392c10b30a24f78221aa9'
+
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///site.db'
+
+db =SQLAlchemy(app)
+
+class User(db.Model):
+    id =db.Column(db.Integer ,primary_key=True)
+    username= db.Column(db.String(20),unique=True,nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    image=db.Column(db.String(20),nullable=False,default='default.jpg')
+    password = db.Column(db.String(20), nullable=False)
+
+    def __repr__(self):
+        return f"User('{{ self.username }}' ,'{{ self.email }}','{{ self.image }}')"
+
+class Post(db.Model):
+    id =db.Column(db.Integer ,primary_key=True)
+    title = db.Column(db.String(20), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False , default=datetime.utcnow)
+    password = db.Column(db.Text, nullable=False)
+    def __repr__(self):
+        return f"User('{{ self.title }}' ,'{{ self.date_posted }}')"
 
 posts=[
     {
@@ -45,9 +69,15 @@ def register():
         return redirect(url_for('home'))
     return render_template('register.html',title='register',form=form)
 
-@app.route("/login")
+@app.route("/login",methods=['GET','POST'])
 def login():
     form= LoginForm()
+    if form.validate_on_submit():
+        if form.email.data=='mithinkumar@gmail.com' and form.password.data=='mithin':
+            flash('You Have LoggedIn Successfullly !')
+            return redirect(url_for('home'))
+        else:
+            flash('Login unsuceessfull ! Invalid  email or Password','danger')
     return render_template('login.html',title='Login',form=form)
 if __name__ == '__main__':
     app.run(debug=True)
